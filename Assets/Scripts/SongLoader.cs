@@ -313,11 +313,14 @@ public class SongLoader : MonoBehaviour
 					int traceBack = 1;
 					while (traceBack < 5)
 					{
-						if (list[list.Count - traceBack].timestamp == timestamp)
-						{
-							list[list.Count - traceBack].star = true;
-							traceBack++;
-							continue;
+						if (list.Count > 1)
+                        			{
+							if (list[list.Count - traceBack].timestamp == timestamp)
+							{
+								list[list.Count - traceBack].star = true;
+								traceBack++;
+								continue;
+							}
 						}
 						break;
 					}

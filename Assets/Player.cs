@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	public RenderTexture Initialize(int _playerNumber,Song _song, Song.Difficulty _difficulty,Vector2 _output, Pool _pool, PoolIndex _poolIndex, uint _resolution, float _speed)
+	public RenderTexture Initialize(int _playerNumber,Song _song, Song.Difficulty _difficulty,Vector2 _output, Pool _pool, PoolIndex _poolIndex, long _resolution, float _speed)
 	{
 		playerNumber = _playerNumber;
 		layerMask= 1 << (10 + playerNumber);
@@ -109,7 +109,7 @@ public class Player : MonoBehaviour
 		}
 		pool = _pool;
 		index = new PoolIndex();
-		resolution = _resolution;
+		resolution = (uint)_resolution;
 		nextBar = resolution;
 		speed = _speed;
 		index = _poolIndex;

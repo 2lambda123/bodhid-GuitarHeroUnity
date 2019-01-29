@@ -5,8 +5,10 @@ public class SongBlock : MonoBehaviour
 {
 	public FileInfo fileInfo;
 	public SongSelect songSelect;
-	public Text text;
-	public void Play()
+    public Text Artist;
+    public Text SongName;
+    public Text Charter;
+    public void Play()
 	{
 		songSelect.LoadSong(fileInfo);
 	}

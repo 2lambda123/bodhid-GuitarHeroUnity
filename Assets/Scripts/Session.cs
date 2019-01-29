@@ -171,7 +171,7 @@ public class Session : MonoBehaviour
 
 			Sync(millisecondsPassed);
 			smoothBpm = smoothing.SmoothBPM(bpm);
-			smoothTick = smoothing.SmoothTick(tick, song.data.info.resolution);
+			smoothTick = smoothing.SmoothTick(tick, (uint)song.data.info.resolution);
 			bool playGuitarMusic = false;
 			for (int i = 0; i < players.Length; ++i)
 			{

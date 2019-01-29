@@ -18,7 +18,19 @@ public class Song
 		Expert
 	}
 
-	[System.Serializable]
+    public enum ChartType
+    {
+        mid = 9,
+        chart = 11
+    }
+
+    public enum ReadableAudioType
+    {
+        ogg = 0,
+        mp3 = 1
+    }
+
+    [System.Serializable]
 	public class Data
 	{
 		public Notes notes;
@@ -29,8 +41,22 @@ public class Song
 
 	[System.Serializable]
 	public class Info
-	{
-		public uint resolution;
+	{		
+        public string chartName = "Unknown";
+        public string chartArtist = "Unknown";
+        public string chartCharter = "Unknown";
+        public double offset = 0.0;
+        public long resolution = 192;
+        public string player2 = "Unknown";
+        public Difficulty difficulty = Difficulty.Easy - 1;
+        public double previewStart = 0.0;
+        public double previewEnd = 0.0;
+        public string genre = "Unknown";
+        public string mediaType = "CD";
+        public string musicStream = "Unknown";
+        public string guitarStream = "Unknown";
+        public string bassStream = "Unknown";
+        public string rhythmStream = "Unknown";
 	}
 
 	[System.Serializable]

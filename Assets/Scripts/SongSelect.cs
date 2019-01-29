@@ -30,12 +30,14 @@ public class SongSelect : MonoBehaviour
 			newBlock.transform.SetParent(songblockPrefab.transform.parent);
 			newBlock.transform.localPosition = Vector3.zero;
 			newBlock.transform.localScale = Vector3.one;
-			newBlock.text.text = songs[i].displayArtist;
-			newBlock.fileInfo = songs[i].fileInfo;
+            newBlock.Artist.text = songs[i].Artist;
+            newBlock.SongName.text = songs[i].SongName;
+            newBlock.Charter.text = songs[i].Charter;
+            newBlock.fileInfo = songs[i].fileInfo;
 		}
 		if (songs.Count == 0)
 		{
-			songblockPrefab.text.text = "No Songs found";
+			songblockPrefab.SongName.text = "No Songs found";
 			songblockPrefab.GetComponent<Button>().enabled = false;
 		}
 		else

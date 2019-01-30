@@ -15,7 +15,9 @@ https://docs.google.com/spreadsheets/d/13B823ukxdVMocowo1s5XnT3tzciOfruhUVePENKc
 Guitar Hero assets have been "poorly" redrawn.
 ![alt text](https://i.postimg.cc/0QP8vY1t/gh-Screenshot.jpg)
 
-Youtube video:
+Youtube videos:
 
 [![alt text](https://img.youtube.com/vi/R4eqFEGM84s/0.jpg)](https://www.youtube.com/watch?v=R4eqFEGM84s)
+
+[![alt text](https://img.youtube.com/vi/R4eqFEGM84s/0.jpg)](https://www.youtube.com/watch?v=0QAfjxxkmtU)
 

@@ -8,7 +8,6 @@ public class Song
 	public FileInfo fileInfo;
 	public bool ready;
 	public Data data;
-	public Audio audio;
 
 	public enum Difficulty
 	{
@@ -103,11 +102,5 @@ public class Song
 		}
 		public uint timestamp, value;
 		public string command;
-	}
-
-	[System.Serializable]
-	public class Audio
-	{
-		public AudioClip song, guitar, rhythm, preview;
-	}
+	}    
 }

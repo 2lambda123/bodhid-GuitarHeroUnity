@@ -18,7 +18,6 @@ public class Session : MonoBehaviour
 	public int syncIndex = 0;
 	public float boardLength = 10; //meters
 	//public NoteInstance[] noteInstancePool;
-	private AudioSource guitarSource, rhythmSource, songSource;
 	public float time, previousTime;
 	public double visualOffset;
 	public double tick = 0;
@@ -27,7 +26,7 @@ public class Session : MonoBehaviour
 	public double bpm, smoothBpm;
 	public float RenderingFadeDistance = 3;
 	public float RenderingFadeAmount = 1;
-
+    public AudioSource guitar;
 	public class PlayerInfo
 	{
 		public PlayerInfo(Song.Difficulty _difficulty)
@@ -41,14 +40,8 @@ public class Session : MonoBehaviour
 	{
 		Debug.Log("initializing ");
 		song = _song;
-		guitarSource = gameObject.AddComponent<AudioSource>();
-		rhythmSource = gameObject.AddComponent<AudioSource>();
-		songSource = gameObject.AddComponent<AudioSource>();
-		guitarSource.playOnAwake = rhythmSource.playOnAwake = songSource.playOnAwake = false;
-		guitarSource.clip = song.audio.guitar;
-		rhythmSource.clip = song.audio.rhythm;
-		songSource.clip = song.audio.song;
-		Shader.SetGlobalFloat("_GH_Distance", RenderingFadeDistance);
+        AudioHelper.currentPlaybackSource = AudioHelper.FindCurrentPlayback();
+        Shader.SetGlobalFloat("_GH_Distance", RenderingFadeDistance);
 		Shader.SetGlobalFloat("_GH_Fade", RenderingFadeAmount);
 		smoothing = new Smoothing(visualOffset);
 		List<RenderTexture> outputs = new List<RenderTexture>();
@@ -123,15 +116,16 @@ public class Session : MonoBehaviour
 			}
 		}
 		frameIndex = 0;
-		//noteInstancePool = null;
-		Destroy(guitarSource.clip);
-		Destroy(rhythmSource.clip);
-		Destroy(songSource.clip);
-		Destroy(guitarSource);
-		Destroy(rhythmSource);
-		Destroy(songSource);
-		guitarSource = rhythmSource = songSource = null;
-		time = previousTime = 0;
+        //noteInstancePool = null;
+        AudioHelper.resetAudio();
+        //Destroy(guitarSource.clip);
+        //Destroy(rhythmSource.clip);
+        //Destroy(songSource.clip);
+        //Destroy(guitarSource);
+        //Destroy(rhythmSource);
+        //Destroy(songSource);
+        //guitarSource = rhythmSource = songSource = null;
+        time = previousTime = 0;
 		tick = 0;
 		smoothTick = 0;
 		starPowerDuration = 0;
@@ -156,7 +150,7 @@ public class Session : MonoBehaviour
 	
 	void Update()
 	{
-		if (songSource != null && songSource.isPlaying)
+		if (AudioHelper.currentPlaybackSource != null && AudioHelper.currentPlaybackSource.isPlaying)
 		{
 			//first get input for this frame
 			for (int i = 0; i < players.Length; ++i)
@@ -164,10 +158,9 @@ public class Session : MonoBehaviour
 				players[i].GetInput();
 			}
 			frameIndex++;
-			time = (songSource.time * 1000f);
+			time = (AudioHelper.currentPlaybackSource.time * 1000f);
 			float millisecondsPassed = time - previousTime;
-			rhythmSource.time = songSource.time;
-			guitarSource.time = songSource.time;
+            AudioHelper.setAllAudioTime(AudioHelper.currentPlaybackSource.time);
 
 			Sync(millisecondsPassed);
 			smoothBpm = smoothing.SmoothBPM(bpm);
@@ -182,7 +175,9 @@ public class Session : MonoBehaviour
 				players[i].RegisterAndRemove(smoothTick);
 				playGuitarMusic |= players[i].lastNoteHit;
 			}
-			guitarSource.volume = playGuitarMusic ? 1 : 0;
+
+            if(AudioHelper.GetCertainAudio("guitar") != null)
+			    AudioHelper.GetCertainAudio("guitar").volume = playGuitarMusic ? 1 : 0;
 
 			previousTime = time;
 		}
@@ -190,9 +185,7 @@ public class Session : MonoBehaviour
 		{
 			if (playing)
 			{
-				guitarSource.Play();
-				rhythmSource.Play();
-				songSource.Play();
+                AudioHelper.playAllAudio(0);
 			}
 		}
 	}

@@ -21,13 +21,14 @@ public class SongScanning : MonoBehaviour
 	[System.Serializable]
 	public class SongInfo
 	{
-		public FileInfo fileInfo;
+		public string fileLoction;
         public string Artist { get; set; }
         public string SongName { get; set; }
         public string Charter { get; set; }
         public string Album { get; set; }
         public long offset { get; set; }
         public long PreviewStartTime { get; set; }
+        public Song.ChartType type { get; set; }
     }
 
 	private void Start()
@@ -104,12 +105,12 @@ public class SongScanning : MonoBehaviour
                     try
                     {
                         SongMID midFile = MidReader.ReadMidi(s, false);
-                        ChartWriter.WriteChart(midFile, Application.dataPath + "/notes.chart", false);
+                        ChartWriter.WriteChart(midFile, dir + "/notes.chart", false);
                         ChartReader testReader = new ChartReader();
                         Song _testCurrentChart = new Song();
-                        _testCurrentChart = testReader.ReadChartFile(@Application.dataPath + "/notes.chart");
-                        File.Delete(@Application.dataPath + "/notes.chart");
-                        list.Add(CreateSongInfo(s, Song.ChartType.chart));
+                        _testCurrentChart = testReader.ReadChartFile(@dir + "/notes.chart");
+                        File.Delete(@dir + "/notes.chart");
+                        list.Add(CreateSongInfo(s, Song.ChartType.mid));
                     }
                     catch (Exception e)
                     {
@@ -172,9 +173,12 @@ public class SongScanning : MonoBehaviour
                     uint _time = 0;
                     uint.TryParse(value, out _time);
                     long time = Math.Abs(_time);
-                    temp.PreviewStartTime = time;
+                    temp.PreviewStartTime = time;                    
                 }
             }
+            temp.type = type;
+            temp.fileLoction = s;
+
             return temp;
         }
         else
@@ -187,8 +191,10 @@ public class SongScanning : MonoBehaviour
             temp.SongName = _currentChart.data.info.chartName;
             temp.Charter = _currentChart.data.info.chartCharter;
             temp.PreviewStartTime = (long)_currentChart.data.info.previewStart;
+            temp.type = type;
             temp.offset = (long)_currentChart.data.info.offset;
             temp.Album = "Album Unknown";
+            temp.fileLoction = s;
         }
 
         return temp;

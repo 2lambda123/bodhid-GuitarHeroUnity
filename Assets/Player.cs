@@ -300,8 +300,9 @@ public class Player : MonoBehaviour
 			willRemoveBars.RemoveAt(i);
 		}
 	}
+    public bool isBot = true;
 
-	public void RegisterAndRemove(double smoothTick)
+    public void RegisterAndRemove(double smoothTick)
 	{
 		bool missedThisFrame = false;
 		//highlighting player input
@@ -437,7 +438,7 @@ public class Player : MonoBehaviour
 				lastNoteHit = false;
 				missedThisFrame = true;
 			}
-			if (nextLine.succes&&!nextLine.fail)
+			if (nextLine.succes&&!nextLine.fail || isBot)
 			{
 				//Debug.Log("HIT");
 				for (int i = 0; i < nextLine.note.Count; ++i)

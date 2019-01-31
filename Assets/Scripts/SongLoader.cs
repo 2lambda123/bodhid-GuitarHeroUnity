@@ -29,6 +29,7 @@ public class SongLoader : MonoBehaviour
 	private Song song;
     private string error;
     private string chartLocation;
+    public static GameObject SelectedTitle;
     object lockObject = new object();
 
 	public void Load(string chartFile, Song.ChartType type, OnLoaded onLoaded)
@@ -39,6 +40,46 @@ public class SongLoader : MonoBehaviour
     public void DestroyObject(GameObject go)
     {
         Destroy(go);
+    }
+
+    public static void unSetSelected()
+    {
+        var regSprite = Resources.Load<Sprite>("Textures/Trans");
+
+        Transform[] ts = SelectedTitle.transform.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in ts)
+        {
+            Transform[] ts1 = t.transform.GetComponentsInChildren<Transform>(true);
+            foreach (Transform t1 in ts1)
+            {
+                if (t1.gameObject.name == "selected")
+                {
+                    Image realmSelect = t1.gameObject.GetComponent<Image>();
+                    realmSelect.sprite = regSprite;
+                    SelectedTitle = null;
+                }
+            }
+        }
+    }
+
+    public static void setSelected(GameObject target)
+    {
+        if (SelectedTitle != null)
+            unSetSelected();
+
+        SelectedTitle = target;
+
+        var tarSprite = Resources.Load<Sprite>("Textures/CharacterObjectTargeted");
+
+        Transform[] ts = SelectedTitle.transform.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in ts)
+        {
+            if (t.gameObject.name == "selected")
+            {
+                Image realmSelect = t.gameObject.GetComponent<Image>();
+                realmSelect.sprite = tarSprite;
+            }
+        }
     }
 
     public void PrepareAudio(Song song, OnPrepared onPrepared)
@@ -141,60 +182,6 @@ public class SongLoader : MonoBehaviour
             }
         }
 
-
-
-
-        /*Song.Audio audio = new Song.Audio();
-		FileInfo guitarFileInfo = new FileInfo(song.fileInfo.Directory.FullName + "/guitar.ogg");
-		if (guitarFileInfo.Exists)
-		{
-			using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(guitarFileInfo.FullName, AudioType.OGGVORBIS))
-			{
-				yield return uwr.SendWebRequest();
-				if (uwr.isNetworkError || uwr.isHttpError)
-				{
-					Debug.LogError(uwr.error);
-					yield break;
-				}
-				yield return null;
-				audio.guitar = DownloadHandlerAudioClip.GetContent(uwr);
-			}
-		}
-		Debug.Log("Loading song");
-		yield return null;
-		FileInfo songFileInfo = new FileInfo(song.fileInfo.Directory.FullName + "/song.ogg");
-		if (songFileInfo.Exists)
-		{
-			using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(songFileInfo.FullName, AudioType.OGGVORBIS))
-			{
-				yield return uwr.SendWebRequest();
-				if (uwr.isNetworkError || uwr.isHttpError)
-				{
-					Debug.LogError(uwr.error);
-					yield break;
-				}
-				yield return null;
-				audio.song = DownloadHandlerAudioClip.GetContent(uwr);
-			}
-		}
-		Debug.Log("Loading rhythm");
-		yield return null;
-		FileInfo rhythmFileInfo = new FileInfo(song.fileInfo.Directory.FullName + "/rhythm.ogg");
-		if (rhythmFileInfo.Exists)
-		{
-			using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(rhythmFileInfo.FullName, AudioType.OGGVORBIS))
-			{
-				yield return uwr.SendWebRequest();
-				if (uwr.isNetworkError || uwr.isHttpError)
-				{
-					Debug.LogError(uwr.error);
-					yield break;
-				}
-				yield return null;
-				audio.rhythm = DownloadHandlerAudioClip.GetContent(uwr);
-			}
-		}*/
-		//song.audio = audio;
 		Debug.Log("Audio loaded");
 		onPrepared();
 	}

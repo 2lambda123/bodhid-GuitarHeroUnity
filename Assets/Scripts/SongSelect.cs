@@ -39,6 +39,7 @@ public class SongSelect : MonoBehaviour
             newBlock.Charter.text = songs[i].Charter;
             newBlock.ChartLocation = songs[i].fileLoction;
             newBlock.type = songs[i].type;
+            newBlock.name = songs[i].SongName;
 
             string path = Path.GetDirectoryName(songs[i].fileLoction);
             string[] pngFiles = Directory.GetFiles(path, "*.png", SearchOption.AllDirectories);

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,6 +39,12 @@ public class SongSelect : MonoBehaviour
             newBlock.Charter.text = songs[i].Charter;
             newBlock.ChartLocation = songs[i].fileLoction;
             newBlock.type = songs[i].type;
+
+            string path = Path.GetDirectoryName(songs[i].fileLoction);
+            string[] pngFiles = Directory.GetFiles(path, "*.png", SearchOption.AllDirectories);
+
+            if (pngFiles.Length > 0)
+                 StartCoroutine(SongLoader.Instance.GetImage(newBlock.CoverImage, pngFiles[0]));
         }
         if (songs.Count == 0)
         {

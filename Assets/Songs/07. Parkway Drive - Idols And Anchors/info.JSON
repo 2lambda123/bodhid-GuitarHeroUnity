@@ -1,0 +1,20 @@
+{
+  "songName": "Idols And Anchors",
+  "songSubName": "Angevil",
+  "authorName": "Parkway Drive",
+  "beatsPerMinute": 60,
+  "previewStartTime": 12,
+  "previewDuration": 10,
+  "coverImagePath": "cover.jpg",
+  "environmentName": "NiceEnvironment",
+  "difficultyLevels": [
+    {
+      "difficulty": "Expert",
+      "difficultyRank": 4,
+      "audioPath": "song.ogg",
+      "jsonPath": "ExpertSingle.json",
+      "offset": 0,
+      "oldOffset": 0
+    }
+  ]
+}

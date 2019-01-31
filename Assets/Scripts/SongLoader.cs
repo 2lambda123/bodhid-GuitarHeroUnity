@@ -6,6 +6,7 @@ using System.Threading;
 using UnityEngine.Networking;
 using NAudio.Wave;
 using mid2chart;
+using UnityEngine.UI;
 
 public class SongLoader : MonoBehaviour
 {
@@ -45,7 +46,14 @@ public class SongLoader : MonoBehaviour
 		StartCoroutine(PrepareCoroutine(song, onPrepared));
 	}
 
-	private IEnumerator LoadCoroutine(string chartFile, Song.ChartType type, OnLoaded onLoaded)
+    public IEnumerator GetImage(Image coverImg, string location)
+    {
+        WWW www = new WWW(location);
+        yield return www;
+        coverImg.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
+    }
+
+    private IEnumerator LoadCoroutine(string chartFile, Song.ChartType type, OnLoaded onLoaded)
 	{
 		yield return null;
         song = new Song();
@@ -133,6 +141,60 @@ public class SongLoader : MonoBehaviour
             }
         }
 
+
+
+
+        /*Song.Audio audio = new Song.Audio();
+		FileInfo guitarFileInfo = new FileInfo(song.fileInfo.Directory.FullName + "/guitar.ogg");
+		if (guitarFileInfo.Exists)
+		{
+			using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(guitarFileInfo.FullName, AudioType.OGGVORBIS))
+			{
+				yield return uwr.SendWebRequest();
+				if (uwr.isNetworkError || uwr.isHttpError)
+				{
+					Debug.LogError(uwr.error);
+					yield break;
+				}
+				yield return null;
+				audio.guitar = DownloadHandlerAudioClip.GetContent(uwr);
+			}
+		}
+		Debug.Log("Loading song");
+		yield return null;
+		FileInfo songFileInfo = new FileInfo(song.fileInfo.Directory.FullName + "/song.ogg");
+		if (songFileInfo.Exists)
+		{
+			using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(songFileInfo.FullName, AudioType.OGGVORBIS))
+			{
+				yield return uwr.SendWebRequest();
+				if (uwr.isNetworkError || uwr.isHttpError)
+				{
+					Debug.LogError(uwr.error);
+					yield break;
+				}
+				yield return null;
+				audio.song = DownloadHandlerAudioClip.GetContent(uwr);
+			}
+		}
+		Debug.Log("Loading rhythm");
+		yield return null;
+		FileInfo rhythmFileInfo = new FileInfo(song.fileInfo.Directory.FullName + "/rhythm.ogg");
+		if (rhythmFileInfo.Exists)
+		{
+			using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(rhythmFileInfo.FullName, AudioType.OGGVORBIS))
+			{
+				yield return uwr.SendWebRequest();
+				if (uwr.isNetworkError || uwr.isHttpError)
+				{
+					Debug.LogError(uwr.error);
+					yield break;
+				}
+				yield return null;
+				audio.rhythm = DownloadHandlerAudioClip.GetContent(uwr);
+			}
+		}*/
+		//song.audio = audio;
 		Debug.Log("Audio loaded");
 		onPrepared();
 	}

@@ -7,6 +7,7 @@ public class SongBlock : MonoBehaviour
     public string ChartLocation;
     public Text Artist;
     public Text SongName;
+    public Image CoverImage;
     public Text Charter;
     public Song.ChartType type;
     public void Play()

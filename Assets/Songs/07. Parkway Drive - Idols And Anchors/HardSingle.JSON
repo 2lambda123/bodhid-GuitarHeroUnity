@@ -1,0 +1,27 @@
+{
+  "_version": "1.5.0",
+  "_beatsPerMinute": 60,
+  "_beatsPerBar": 16,
+  "_noteJumpSpeed": 10,
+  "_shuffle": 0,
+  "_shufflePeriod": 0.5,
+  "_events": [],
+  "_notes": [
+    {
+      "_time": 51.620891571044922,
+      "_lineIndex": 2,
+      "_lineLayer": 0,
+      "_type": 1,
+      "_cutDirection": 0
+    }
+  ],
+  "_obstacles": [
+    {
+      "_time": 51.62089,
+      "_lineIndex": 2,
+      "_type": 1,
+      "_duration": 3.007346,
+      "_width": 2
+    }
+  ]
+}
